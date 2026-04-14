@@ -2,35 +2,35 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Solar Gauge</title>
-<style>
-  body {
-    text-align: center;
-    font-family: Arial;
-  }
-  .value {
-    font-size: 60px;
-    font-weight: bold;
-  }
-</style>
+<script src="https://cdn.jsdelivr.net/npm/canvas-gauges/gauge.min.js"></script>
 </head>
 <body>
 
-<h3>Bức xạ mặt trời</h3>
-<div id="value" class="value">0</div>
+<canvas id="gauge"></canvas>
 
 <script>
-// giả lập giá trị (sau sẽ nối eRA)
-let value = 701;
+// lấy giá trị từ URL (?value=xxx)
+const params = new URLSearchParams(window.location.search);
+let value = parseFloat(params.get("value")) || 0;
 
-// đổi màu theo mức
-let color = "green";
-if (value > 700) color = "red";
-else if (value > 500) color = "orange";
+// tạo gauge
+var gauge = new RadialGauge({
+    renderTo: 'gauge',
+    width: 300,
+    height: 300,
+    units: "W/m²",
+    minValue: 0,
+    maxValue: 2000,
+    majorTicks: ["0","500","1000","1500","2000"],
 
-let el = document.getElementById("value");
-el.innerHTML = value + " W/m²";
-el.style.color = color;
+    highlights: [
+        { from: 0, to: 300, color: "green" },
+        { from: 300, to: 700, color: "orange" },
+        { from: 700, to: 2000, color: "red" }
+    ],
+
+    value: value
+}).draw();
 </script>
 
 </body>
