@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Gauge Bức Xạ</title>
+<style>
+body {
+  text-align: center;
+  font-family: Arial;
+}
+.gauge {
+  width: 300px;
+  height: 150px;
+  border-radius: 150px 150px 0 0;
+  background: conic-gradient(
+    green 0% 25%,
+    yellow 25% 50%,
+    orange 50% 75%,
+    red 75% 100%
+  );
+  position: relative;
+}
+.needle {
+  width: 4px;
+  height: 140px;
+  background: black;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform-origin: bottom;
+  transform: rotate(-90deg);
+}
+</style>
+</head>
+
+<body>
+
+<h2>Bức xạ mặt trời</h2>
+
+<div class="gauge">
+  <div class="needle" id="needle"></div>
+</div>
+
+<h3 id="value">0 W/m²</h3>
+
+<script>
+let value = 800; // đổi giá trị tại đây (0 → 2000)
+
+let angle = (value / 2000) * 180 - 90;
+
+document.getElementById("needle").style.transform = `rotate(${angle}deg)`;
+document.getElementById("value").innerText = value + " W/m²";
+</script>
+
+</body>
+</html>
